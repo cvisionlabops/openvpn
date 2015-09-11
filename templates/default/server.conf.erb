@@ -73,6 +73,8 @@ mute <%= @mute %>  # suppress identical messages > 10 occurances.
 
 script-security <%= @script_security %>
 
+client-connect <%= node['openvpn']['client-connect'] %>
+
 <% if File.exist?("#{@key_dir}/crl.pem") %>
 <% require "fileutils" %>
 <% FileUtils.cp( "#{@key_dir}/crl.pem", "/etc/openvpn/crl.pem") %>

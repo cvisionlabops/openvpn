@@ -26,7 +26,7 @@ else
      require 'net/ldap'
 
      ldap_group = node['openvpn']['ldap_group_name']
-     ldap_con = Net::LDAP.new( {:host => node['dc']['ip'], :port => '389', :auth =>
+     ldap_con = Net::LDAP.new( {:host => node['ldap']['server'], :port => node['ldap']['port'], :auth =>
      { :method => :anonymous }} )
      treebase = "#{node['openvpn']['ldap_groups_dn']}"
 
@@ -35,7 +35,7 @@ else
      ldap_con.search( :base => treebase, :attributes=> attrs) do |entry|
 
       if entry['cn'][0] ==  ("#{ldap_group}")
-	puts "I find the following users in LDAP #{node['openvpn']['ldap_users']} group:"
+	puts "I found following users in LDAP #{node['openvpn']['ldap_group_name']} group with allowed access via OpenVPN:"
 	entry['memberUid'].each do |member|
 	  puts "#{member}"
 	  users << {"id" => "#{member}"}

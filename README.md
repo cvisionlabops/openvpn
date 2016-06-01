@@ -165,7 +165,9 @@ To revoke certificate
 
 Replace `<CLIENT_NAME>` with your desired values. The revoke-full script will modify index.txt openssl db file and create (update) `node["openvpn"]["key_dir"]/crl.pem` file, which is Certificate Revocation List. This file will be included in config file by default if it exists.
 
-Re-run chef-client to apply the configuration in server config file.
+**Re-run chef-client to include crl.pem in config file, if crl.pem is just created.**
+
+**Restart openvpn service manually to read a new crl.pem by server**
 
 Note the `error 23 at 0 depth lookup:certificate revoked` in the last line. That is what you want to see, as it indicates that a certificate verification of the revoked certificate failed and if crl.pem will be included in server.conf, then client's from this file cannot be connected to server.
 

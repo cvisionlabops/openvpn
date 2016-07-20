@@ -76,7 +76,10 @@ script-security <%= @script_security %>
 client-connect <%= node['openvpn']['client-connect'] %>
 
 <% if File.exist?("#{@key_dir}/crl.pem") %>
+<% require "fileutils" %>
+<% FileUtils.cp( "#{@key_dir}/crl.pem", "/etc/openvpn/crl.pem") %>
+<% Chef::Log.warn("Copied #{@key_dir}/crl.pem to /etc/openvpn/crl.pem") %>
 # Certificate Revocation List
-crl-verify <%= "#{@key_dir}/crl.pem" %>
+crl-verify <%= "/etc/openvpn/crl.pem" %>
 <% end %>
 

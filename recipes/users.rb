@@ -26,7 +26,7 @@ else
      require 'net/ldap'
 
      ldap_group = node['openvpn']['ldap_group_name']
-     ldap_con = Net::LDAP.new( {:host => node['ldap']['server'], :port => node['ldap']['port'], :auth =>
+     ldap_con = Net::LDAP.new( { :encryption => :simple_tls,  :host => node['ldap']['server'], :port => node['ldap']['port'], :auth =>
      { :method => :anonymous }} )
      treebase = "#{node['openvpn']['ldap_groups_dn']}"
 

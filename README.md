@@ -155,13 +155,23 @@ Some of the easy-rsa tools are copied to /etc/openvpn/easy-rsa to provide the mi
 Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake task will generate a tar.gz file with the configuration and certificates for the client.
 
 
-SSL Certificates revoking
+SSL Certificates revoking (UPDATED 2017-02-08)
 ----------------
+> in 14.04 there is no `revoke-full` file
+> you must create a link manually, like
+> `ln -s /usr/share/easy-rsa/revoke-full revoke-full-1404`
+
 To revoke certificate 
 
     cd /etc/openvpn/easy-rsa
     source ./vars
-    revoke-full <CLIENT_NAME>
+    revoke-full-1404 <CLIENT_NAME>
+
+Note about recreate a certificate with same name, but new keys:
+
+1. Just revoke-full-1404 specified cert name.
+2.  Backup old cert files to backup dir.
+3. Remove current cert_name.* files from keys dir, and re-run chef-client
 
 Replace `<CLIENT_NAME>` with your desired values. The revoke-full script will modify index.txt openssl db file and create (update) `node["openvpn"]["key_dir"]/crl.pem` file, which is Certificate Revocation List. This file will be included in config file by default if it exists.
 

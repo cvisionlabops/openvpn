@@ -23,7 +23,8 @@ else
    # Retrive users from ldap
    if node['openvpn']['ldap_users']
 
-     require 'net/ldap'
+     require 'net-ldap'
+     #chef_gem 'net-ldap'
 
      ldap_group = node['openvpn']['ldap_group_name']
      ldap_con = Net::LDAP.new( { :encryption => :simple_tls,  :host => node['ldap']['server'], :port => node['ldap']['port'], :auth =>
